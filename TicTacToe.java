@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import javax.swing.border.LineBorder;
 
 public class TicTacToe {
     int boardWidth = 600;
@@ -11,11 +11,15 @@ public class TicTacToe {
     JLabel textLabel = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    JPanel buttPanel = new JPanel();
 
     JButton[][] board = new JButton[3][3];
     String playerX ="X";
     String playerO ="O";
     String currentPlayer = playerX;
+
+    int scorex= 0;
+    int scoreO=0;
 
 
     boolean finish  = false;
@@ -50,6 +54,29 @@ public class TicTacToe {
          boardPanel.setBackground(Color.blue);
          frame.add(boardPanel);
 
+
+         buttPanel.setLayout(new GridLayout(1,2));
+
+            JButton resetButton=new JButton(" RESET ");
+            resetButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e){
+                resetGame();
+                }
+            });
+
+
+                JButton exiButton=new JButton("EXIT");
+                exiButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        System.exit(0);
+                    }
+                });
+
+
+                buttPanel.add(resetButton);
+                buttPanel.add(exiButton);
+                frame.add(buttPanel,BorderLayout.SOUTH);
+
          for(int r=0; r < 3;r++)
          {
             for(int c=0; c <3;c++)
@@ -63,6 +90,7 @@ public class TicTacToe {
                 tile.setForeground(Color.black);
                 tile.setFont(new Font("Arial",Font.BOLD,120));
                 tile.setFocusable(false);
+                tile.setBorder(new LineBorder(new Color(12,116,117),3));
                 //tile.setText(currentplayer);
 
 
@@ -174,5 +202,20 @@ public class TicTacToe {
         tile.setForeground(Color.yellow);
         tile.setBackground(Color.gray);
         textLabel.setText("Tie!");
+    }
+    void resetGame(){
+        for(int r=0;r<3;r++)
+        {
+            for(int c=0;c<3;c++)
+            {
+                board[r][c].setText("");
+                board[r][c].setBackground(Color.BLUE);
+                board[r][c].setForeground(Color.BLACK);
+            }
+        }
+        currentPlayer =playerX;
+        finish=false;
+        turns=0;
+        textLabel.setText("TIC-TAC-TOE");
     }
 }
